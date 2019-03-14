@@ -10,3 +10,11 @@ Like [bash tips](/bash-tips), but for my favourite command line text editor - Vi
 
 Command | Description
 ------- | :-----------|
+
+## Search and Replace
+```
+:%s/foo/bar/g #Find each foo in all lines and replace with bar
+:%s/foo/bar/gc #Find each foo in all lines and ask to replace with bar
+:s/foo/bar/ #Find first foo and replace with bar
+:s/foo/bar/g #Find each foo in current line and replace with bar
+```
