@@ -10,3 +10,13 @@ Like [bash tips](/bash-tips) but for git!
 
 Command | Description
 ------- | :-----------|
+
+## Stash
+```
+git stash
+git stash list
+git stash pop
+git stash apply stash@{1}
+git show stash@{0}:<file_name> # shows the full file as if stash was applied
+git stash clear
+```
