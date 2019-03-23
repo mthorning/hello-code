@@ -12,7 +12,7 @@ Command | Description
 ------- | :-----------|
 `man`   | Follow this with any command for full instructions on how to use. Most commands can be followed with `--help` or `-h` as well for a reminder of the basics.
 `set -e` | Sets option to exit a script if a command returns a non-zero exit code.
-`set -z` | Outputs the commands that get run as they run.
+`set -x` | Outputs the commands that get run as they run.
 `grep` | Searches an input and prints out lines that match a pattern.
 `<()` | Treats output as a file such as `diff <(grep something) <(grep nothing)`.
 `!!` | Repeats the last command.
@@ -28,6 +28,9 @@ Command | Description
 `lsof` | Lists open files. Use with `-i :80` to find process listening on a port (port 80 here).
 `netstat` | Lists network processes. If used with `-plt` switch it shows port numbers with programme name and PID. Useful if there is a process already listening on a port which you want to use.
 `ctrl-r` | Reverse history search. `Ctrl-r` next item, `ctrl-j` to copy or `enter` to run.
+`top` | Live feed of processes using memory and how much memory they are using.
+`htop` | Like top but with a graphical interface.
+`tee` | Splits the output of a program so that it can be both displayed on screen and saved in a file.
 
 ## Variables
 ```
