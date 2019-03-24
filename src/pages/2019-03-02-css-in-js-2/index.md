@@ -3,6 +3,7 @@ path: "/css-in-js-2"
 date: "2019-03-03T10:00:00"
 title: "CSS in JS (part 2)"
 tags: ["javascript", "css", "tooling", "react"]
+type: "blog"
 description: "Following on from the first post of this name, I have now started using the Emotion package which has been created for use with React, this post is about how to use it."
 ---
 

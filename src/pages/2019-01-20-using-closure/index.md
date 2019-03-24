@@ -2,6 +2,7 @@
 path: "/using-closure"
 date: "2019-01-20T19:00:00"
 title: "Using closures"
+type: "blog"
 tags: ["javascript"]
 description: "In my first blog post I talk about closures and how to use them in JavaScript."
 ---

@@ -2,8 +2,8 @@ import React from 'react'
 import { graphql } from 'gatsby'
 import Helmet from 'react-helmet'
 import Layout from 'layouts/main-layout'
-import { ShareButtons, PreviousNext } from 'components'
-import { BlogInfo, JumpToSection } from 'components/blog'
+import { ShareButtons, PreviousNext, JumpToSection } from 'components'
+import { BlogInfo } from 'components/blog'
 import { blogFunctionsWrapper, blogFunctions } from './styles'
 
 export default function Template({ data, location, pageContext }) {

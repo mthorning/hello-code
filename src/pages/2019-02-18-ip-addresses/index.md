@@ -2,6 +2,7 @@
 path: "/ip-addresses"
 date: "2019-02-17T08:00"
 title: "IP addresses"
+type: "blog"
 tags: ["networking"]
 description: "I write down what I know about IP addresses and how the browser is able to navigate its way to files you want when you type a URL into the address bar."
 ---

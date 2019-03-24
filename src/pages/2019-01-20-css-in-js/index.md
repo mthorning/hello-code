@@ -2,6 +2,7 @@
 path: "/css-in-js"
 date: "2019-02-20T20:10:00"
 title: "CSS in JS"
+type: "blog"
 tags: ["javascript", "css", "tooling"]
 description: "Unhappy with Sass as a solution for component-based apps, I've decided to see what this CSS-in-JS hype is all about by switching to a library called Emotion."
 ---

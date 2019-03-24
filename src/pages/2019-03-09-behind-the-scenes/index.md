@@ -2,6 +2,7 @@
 path: "/behind-the-scenes"
 date: "2019-03-10T18:30:00"
 title: "Behind the scenes"
+type: "blog"
 tags: ["deployment", "networking", "tooling", "linux"]
 description: "I describe how I set up my server to serve this website and the techniques I use to deploy the site each time I want to release some code."
 ---

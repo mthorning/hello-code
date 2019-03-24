@@ -1,9 +1,6 @@
 ---
-path: "/git-tips"
-date: "2019-03-13T08:00"
-title: "Git tips"
-tags: ["git", "reference"]
-description: "A reference page for Git commands"
+subject: "Git"
+type: "reference"
 ---
 
 ## Branching

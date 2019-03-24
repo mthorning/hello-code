@@ -2,6 +2,7 @@
 path: "/npm-version"
 date: "2019-01-22T20:00"
 title: "Semantic versioning with NPM"
+type: "blog"
 tags: ["javascript", "tooling", "deployment"]
 description: "In this post I talk about semantic versioning, why it's a good thing and how to do it using NPM."
 ---

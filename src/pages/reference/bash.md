@@ -1,9 +1,6 @@
 ---
-path: "/bash-tips"
-date: "2019-03-13T08:00"
-title: "Bash tips"
-tags: ["linux", "reference"]
-description: "A reference page for Bash commands"
+subject: "Bash"
+type: "reference"
 ---
 
 Command | Description

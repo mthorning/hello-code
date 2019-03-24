@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import { navigate } from 'gatsby'
 import { IoIosArrowDown } from 'react-icons/io'
-import { wrapper, selectedStyle, overlay, bySide } from './jump-to-styles'
+import { wrapper, selectedStyle, overlay, bySide } from './styles'
 
 const propTypes = {
   headings: PropTypes.array,

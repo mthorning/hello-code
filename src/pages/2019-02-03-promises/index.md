@@ -2,6 +2,7 @@
 path: "/promises"
 date: "2019-02-05T21:30"
 title: "Promises, promises"
+type: "blog"
 tags: ["javascript"]
 description: "I take a look at promises in JavaScript and how to write asynchronous code."
 ---

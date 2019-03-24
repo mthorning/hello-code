@@ -2,6 +2,7 @@
 path: "/vscode-extension"
 date: "2019-01-30T20:00"
 title: "Creating a VS Code extension"
+type: "blog"
 tags: ["javascript", "tooling", "testing"]
 description: "I've written an extension for VS Code, this post is a guide on how I created it and published it to the marketplace."
 ---

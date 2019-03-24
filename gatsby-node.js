@@ -1,7 +1,12 @@
 const path = require('path')
+
 exports.createPages = ({ actions, graphql }) => {
   const { createPage } = actions
   const blogPostTemplate = path.resolve(`src/components/blog/blog-post.js`)
+  const referencePageTemplate = path.resolve(
+    `src/components/reference-page/index.js`
+  )
+
   return graphql(`
     {
       allMarkdownRemark(
@@ -17,6 +22,8 @@ exports.createPages = ({ actions, graphql }) => {
               date
               path
               title
+              type
+              subject
             }
           }
         }
@@ -28,6 +35,15 @@ exports.createPages = ({ actions, graphql }) => {
     }
     const posts = result.data.allMarkdownRemark.edges
     posts.forEach((post, i) => {
+      if (post.node.frontmatter.type == 'blog') {
+        createBlogPage(post, i)
+      }
+      if (post.node.frontmatter.type == 'reference') {
+        createReferencePage(post)
+      }
+    })
+
+    function createBlogPage(post, i) {
       //sorted by desc so these need to be reversed
       const previous =
         i < posts.length - 1
@@ -44,6 +60,14 @@ exports.createPages = ({ actions, graphql }) => {
         component: blogPostTemplate,
         context: { previous, next },
       })
-    })
+    }
+
+    function createReferencePage(post) {
+      createPage({
+        path: `/reference/${post.node.frontmatter.subject}`,
+        subject: post.node.frontmatter.subject,
+        component: referencePageTemplate,
+      })
+    }
   })
 }
