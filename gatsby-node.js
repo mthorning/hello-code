@@ -2,27 +2,37 @@ const path = require('path')
 
 exports.createPages = ({ actions, graphql }) => {
   const { createPage } = actions
-  const blogPostTemplate = path.resolve(`src/components/blog/blog-post.js`)
-  const referencePageTemplate = path.resolve(
-    `src/components/reference-page/index.js`
-  )
+  const blogPostTemplate = path.resolve(`src/templates/blog-post.js`)
+  const refPageTemplate = path.resolve(`src/templates/reference-page.js`)
 
   return graphql(`
     {
-      allMarkdownRemark(
+      blogPosts: allMarkdownRemark(
+        filter: { frontmatter: { type: { eq: "blog" } } }
         sort: { order: DESC, fields: [frontmatter___date] }
         limit: 1000
       ) {
         edges {
           node {
-            excerpt(pruneLength: 250)
             html
             id
             frontmatter {
               date
               path
               title
-              type
+            }
+          }
+        }
+      }
+      refPages: allMarkdownRemark(
+        filter: { frontmatter: { type: { eq: "reference" } } }
+      ) {
+        edges {
+          node {
+            html
+            id
+            frontmatter {
+              path
               subject
             }
           }
@@ -33,17 +43,8 @@ exports.createPages = ({ actions, graphql }) => {
     if (result.errors) {
       return Promise.reject(result.errors)
     }
-    const posts = result.data.allMarkdownRemark.edges
+    const posts = result.data.blogPosts.edges
     posts.forEach((post, i) => {
-      if (post.node.frontmatter.type == 'blog') {
-        createBlogPage(post, i)
-      }
-      if (post.node.frontmatter.type == 'reference') {
-        createReferencePage(post)
-      }
-    })
-
-    function createBlogPage(post, i) {
       //sorted by desc so these need to be reversed
       const previous =
         i < posts.length - 1
@@ -60,14 +61,13 @@ exports.createPages = ({ actions, graphql }) => {
         component: blogPostTemplate,
         context: { previous, next },
       })
-    }
-
-    function createReferencePage(post) {
+    })
+    const pages = result.data.refPages.edges
+    pages.forEach(page =>
       createPage({
-        path: `/reference/${post.node.frontmatter.subject}`,
-        subject: post.node.frontmatter.subject,
-        component: referencePageTemplate,
+        path: page.node.frontmatter.path,
+        component: refPageTemplate,
       })
-    }
+    )
   })
 }

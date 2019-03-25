@@ -1,6 +1,7 @@
 ---
 subject: "Bash"
 type: "reference"
+path: "/reference/bash"
 ---
 
 Command | Description

@@ -1,6 +1,7 @@
 ---
 subject: "Git"
 type: "reference"
+path: "/reference/git"
 ---
 
 ## Branching

@@ -31,14 +31,8 @@ export const personalLinks = theme => css`
   }
 `
 export const title = theme => css`
-  margin: 0;
   display: inline-block;
-  color: ${theme.secondaryColor};
-  ${theme.smallScreen} {
-    font-size: 35px;
-  }
-  position: absolute;
-  bottom: 10px;
+  ${theme.headerTitle}
 `
 export const whiteBorder = theme => css`
   border-right: 3px solid ${theme.secondaryColor};

@@ -6,6 +6,7 @@ const textColor = 'rgba(0, 0, 0, 0.5)'
 const footerIconFontSize = '25px'
 const blogInfoIconFontSize = '13px'
 const maxWidth = '900px'
+const smallScreen = '@media (max-width: 480px)'
 
 export default {
   primaryColor,
@@ -15,7 +16,7 @@ export default {
   blogInfoIconFontSize,
   contentMaxWidth: maxWidth,
   headerMaxWidth: maxWidth,
-  smallScreen: `@media (max-width: 480px)`,
+  smallScreen,
   orangeLink: css`
     color: ${textColor};
     text-decoration: none;
@@ -24,5 +25,14 @@ export default {
       color: ${primaryColor};
       text-decoration: none;
     }
+  `,
+  headerTitle: css`
+    color: ${secondaryColor};
+    margin: 0;
+    ${smallScreen} {
+      font-size: 35px;
+    }
+    position: absolute;
+    bottom: 10px;
   `,
 }

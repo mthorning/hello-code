@@ -5,9 +5,9 @@ import { wrapper, innerWrapper, titleWrapper } from './style'
 export { default as TypeHello } from './type-hello'
 export { default as Title } from './title'
 
-const Header = ({ children }) => {
+const Header = ({ children, styleOverride }) => {
   return (
-    <div css={wrapper}>
+    <div css={theme => [wrapper(theme), styleOverride]}>
       <div css={innerWrapper}>
         <PersonalLinks />
         <div css={titleWrapper}>{children}</div>
