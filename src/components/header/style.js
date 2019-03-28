@@ -12,23 +12,7 @@ export const innerWrapper = theme => css`
 `
 export const titleWrapper = css`
   margin: 0 auto;
-  max-width: 1200px;
   height: 100%;
-`
-export const personalLinks = theme => css`
-  position: absolute;
-  top: 0;
-  right: 0;
-  font-size: 25px;
-
-  ${theme.smallScreen} {
-    right: 0;
-  }
-  a {
-    color: ${theme.secondaryColor};
-    font-size: 30px;
-    margin: 10px;
-  }
 `
 export const title = theme => css`
   display: inline-block;
@@ -44,4 +28,26 @@ export const blinkBorder = theme => css`
     }
   }
   animation: blink 0.5s step-end infinite alternate;
+`
+export const menuButton = theme => css`
+  position: absolute;
+  padding: 5px;
+  bottom: 10px;
+  right: 10px;
+  width: 25px;
+  height: 25px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: stretch;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 4px;
+  border: 1px solid ${theme.secondaryColor};
+
+  span {
+    width: 100%;
+    background: ${theme.secondaryColor};
+    height: 1px;
+    border-radius: 4px;
+  }
 `

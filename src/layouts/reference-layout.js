@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { StaticQuery, graphql } from 'gatsby'
-import Header, { Title } from 'components/header'
+import Header from 'components/header'
 import { css } from '@emotion/core'
 
 const RefLayout = ({ children, animateHeader }) => {
@@ -19,9 +19,6 @@ const RefLayout = ({ children, animateHeader }) => {
       render={data => (
         <>
           <Header styleOverride={{ background: '#444afc' }}>
-            <Title>
-              <img alt="link to home page" src="images/hc_fav.png" />
-            </Title>
             <h1 css={({ headerTitle }) => headerTitle}>Reference Page</h1>
           </Header>
           <div

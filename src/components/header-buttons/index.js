@@ -1,10 +1,10 @@
 import React from 'react'
 import { FaGithub, FaTwitter } from 'react-icons/fa'
-import { personalLinks } from './style'
+import { wrapper } from './style'
 
-export default function PersonalLinks() {
+export default function HeaderButtons() {
   return (
-    <div css={personalLinks}>
+    <div css={wrapper}>
       <a href="https://twitter.com/thorning_m">
         <FaTwitter />
       </a>
