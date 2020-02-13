@@ -13,6 +13,10 @@ export default css`
     margin: 0;
     color: rgba(0, 0, 0, 0.55);
   }
+  body.dark {
+      background: #131313;
+      color: #fff;
+  }
   article,
   aside,
   details,
