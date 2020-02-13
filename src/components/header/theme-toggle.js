@@ -19,7 +19,7 @@ const switchStyle = checked => css`
     width: 18px;
     height: 18px;
     border-radius: 50%;
-    background-color: white;
+    background-color: var(--secondaryColor);
     top: 1px;
     left: ${checked ? '20px' : '1px'};
     transition: all 0.3s;
@@ -27,7 +27,7 @@ const switchStyle = checked => css`
 `
 
 function Toggle({ theme, toggleTheme }) {
-  const [checked, setChecked] = useState(theme)
+  const [checked, setChecked] = useState(window.__theme === 'dark')
 
   const clickHandler = () => {
     setChecked(!checked)
@@ -36,7 +36,7 @@ function Toggle({ theme, toggleTheme }) {
     toggleTheme(checked ? 'dark' : 'light')
   }, [checked])
 
-  return <div onClick={clickHandler} css={switchStyle(theme === 'dark')}></div>
+  return <div onClick={clickHandler} css={switchStyle(checked)}></div>
 }
 export default function ThemeToggle() {
   return (

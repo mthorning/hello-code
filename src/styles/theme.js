@@ -1,8 +1,8 @@
 import { css } from '@emotion/core'
 
-const primaryColor = '#f82122'
-const secondaryColor = '#fff'
-const textColor = 'rgba(0, 0, 0, 0.5)'
+const primaryColor = 'var(--primaryColor)'
+const textColor = 'var(--color)'
+const secondaryColor = 'var(--secondaryColor)'
 const footerIconFontSize = '25px'
 const blogInfoIconFontSize = '13px'
 const maxWidth = '900px'
@@ -21,7 +21,7 @@ export default {
     text-decoration: none;
     cursor: pointer;
     &:hover {
-      color: ${primaryColor};
+      color: var(--linkHover);
       text-decoration: none;
     }
   `,

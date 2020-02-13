@@ -10,13 +10,27 @@ export default css`
     }
   }
   body {
+    --color: rgba(0, 0, 0, 0.55);
+    --primaryColor: #f82122;
+    --tagBg: rgba(0,0,0,0.1);
+    --tagColor: #f82122;
+    --secondaryColor: #fff;
+    --linkHover: #f82122;
+
     margin: 0;
-    color: rgba(0, 0, 0, 0.55);
+    color: var(--color);
   }
+
   body.dark {
-      background: #131313;
-      color: #fff;
+      background:#1a1919;
+    --color: #9a8f8f;
+    --primaryColor: #31313182;
+    --tagBg: rgba(255,255,255,0.1);
+    --tagColor: #f82122;
+    --secondaryColor: #e01819;
+    --linkHover: #f82122;
   }
+
   article,
   aside,
   details,
