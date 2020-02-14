@@ -10,25 +10,29 @@ export default css`
     }
   }
   body {
+    --bg: #fff;
     --color: rgba(0, 0, 0, 0.55);
     --primaryColor: #f82122;
     --tagBg: rgba(0,0,0,0.1);
     --tagColor: #f82122;
     --secondaryColor: #fff;
     --linkHover: #f82122;
+    --white: #fff;
 
     margin: 0;
     color: var(--color);
+    background: var(--bg);
   }
 
   body.dark {
-      background:#1a1919;
-    --color: #9a8f8f;
+    --bg: #1a1919;
+    --color: #aeaeae;
     --primaryColor: #31313182;
     --tagBg: rgba(255,255,255,0.1);
     --tagColor: #f82122;
     --secondaryColor: #e01819;
     --linkHover: #f82122;
+    --white: #aeaeae;
   }
 
   article,
@@ -68,6 +72,7 @@ export default css`
   template {
     display: none;
   }
+  li a, 
   p a {
     background-color: transparent;
     -webkit-text-decoration-skip: objects;
@@ -131,7 +136,7 @@ export default css`
     line-height: 1.3rem;
   }
   code {
-    background: #edecec;
+    background: var(--tagBg);
     padding: 0px 4px;
     border-radius: 5px;
   }

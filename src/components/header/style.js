@@ -22,7 +22,7 @@ export const personalLinks = theme => css`
   font-size: 25px;
 
   a {
-    color: ${theme.secondaryColor};
+    color: var(--white);
     font-size: 30px;
     margin: 10px;
   }

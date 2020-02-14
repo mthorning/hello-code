@@ -27,7 +27,9 @@ const switchStyle = checked => css`
 `
 
 function Toggle({ theme, toggleTheme }) {
-  const [checked, setChecked] = useState(window.__theme === 'dark')
+  const [checked, setChecked] = useState(
+    typeof window === 'undefined' ? false : window.__theme === 'dark'
+  )
 
   const clickHandler = () => {
     setChecked(!checked)
