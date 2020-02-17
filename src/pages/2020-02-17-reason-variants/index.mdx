@@ -5,19 +5,36 @@ title: 'Variants and Pattern Matching in Reason'
 tags: ['reasonml', 'frontend']
 ---
 
+import CliOutput from 'mdx/CliOutput'
+
+As you may already know if you read my last post, I have been enjoying writing Reason (also known as ReasonMl) lately. Last time I talked about some of the things which confused me, this time I want to talk about one of my favourite parts of the language, variants and pattern matching.
+
 ## What are variants?
-Variants are a type in Reason and, when used with pattern matching, I believe that they are the most powerful feature of the language. They are a way of saying that something *is* a thing of a certain type. I don't think I explained that very well!. You can think of a boolean as a variant because it *is* either true or false. In the same way a variant *is* one thing or any number of other things, but it can't be anything else. Let's use an example:
+Variants are a type in Reason which you may have already encountered in other languages as enums. They are a way of saying that something __is__ a thing of a certain type. I don't think I explained that very well!. You can think of a boolean as a variant because it __is__ either true or false. In the same way a variant __is__ one thing or any number of other things, but it can't be anything else. Let's use an example to dig me out of this semantic hole:
 
 ```reason
-type season = | Winter | Spring | Summer | Autumn;
+type season = 
+    | Winter 
+    | Spring 
+    | Summer 
+    | Autumn;
 ```
-
-Variants are actually constructors and can be called with variables as you would with a function. This means that you can also pass variables around inside your variants:
+There are only four seasons and in the same way our `season` variant type can only have the four cases `Winter`, `Spring`, `Summer` or `Autumn`. Notice that the variant cases themselves begin with a capital letter, this is because they are actually constructors and can be called with variables as you would with a function. This means that you can also pass variables around inside your variants like this:
 
 ```reason
 type temp = float;
-type weather = | Snowing | Raining | Windy | Sunny;
-type season = | Winter(temp, weather) | Spring(temp, weather) | Summer(temp, weather) | Autumn(temp, weather);
+
+type weather = 
+    | Snowing 
+    | Raining 
+    | Windy 
+    | Sunny;
+    
+type season = 
+    | Winter(temp, weather) 
+    | Spring(temp, weather) 
+    | Summer(temp, weather) 
+    | Autumn(temp, weather);
 ```
 Here, each of the `season` variants contains two variables, `temp` and `weather`. `temp` is just an alias for float, aliasing is a way of documenting code so that it is easier to convey  intent to anyone reading it in future, the compiler will just see it as a float though. `weather` is another variant; it's possible to pass variants around inside of other variants, they can also be self recursive:
 
@@ -26,8 +43,13 @@ type things('a) =
     | Empty 
     | Value('a, things('a));
 ```
-Our type `things` can either be `Empty` or it can contain two values, one is a value 
+Our type `things` can either be `Empty` or it can contain two values, one is a value of type `'a` which can be any type and the other is another `thing` variant which holds the same type `'a`. This is essentially how Lists work in Reason as you can see if you log one out to the console:
+
+```reason
+Js.log(["three", "element", "list]);
+```
+<CliOutput
+  output={`[ 'three', [ 'element', [ 'list', 0 ] ] ]`}
+/>
 
 
-
-## Option and Result
