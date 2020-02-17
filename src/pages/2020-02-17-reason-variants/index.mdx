@@ -1,0 +1,33 @@
+---
+slug: '/reason-variants'
+date: '2020-02-17T14:00:00'
+title: 'Variants and Pattern Matching in Reason'
+tags: ['reasonml', 'frontend']
+---
+
+## What are variants?
+Variants are a type in Reason and, when used with pattern matching, I believe that they are the most powerful feature of the language. They are a way of saying that something *is* a thing of a certain type. I don't think I explained that very well!. You can think of a boolean as a variant because it *is* either true or false. In the same way a variant *is* one thing or any number of other things, but it can't be anything else. Let's use an example:
+
+```reason
+type season = | Winter | Spring | Summer | Autumn;
+```
+
+Variants are actually constructors and can be called with variables as you would with a function. This means that you can also pass variables around inside your variants:
+
+```reason
+type temp = float;
+type weather = | Snowing | Raining | Windy | Sunny;
+type season = | Winter(temp, weather) | Spring(temp, weather) | Summer(temp, weather) | Autumn(temp, weather);
+```
+Here, each of the `season` variants contains two variables, `temp` and `weather`. `temp` is just an alias for float, aliasing is a way of documenting code so that it is easier to convey  intent to anyone reading it in future, the compiler will just see it as a float though. `weather` is another variant; it's possible to pass variants around inside of other variants, they can also be self recursive:
+
+```reason
+type things('a) = 
+    | Empty 
+    | Value('a, things('a));
+```
+Our type `things` can either be `Empty` or it can contain two values, one is a value 
+
+
+
+## Option and Result
