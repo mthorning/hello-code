@@ -7,10 +7,10 @@ tags: ['reasonml', 'frontend']
 
 import CliOutput from 'mdx/CliOutput'
 
-As you may already know if you read my last post, I have been enjoying writing Reason (also known as ReasonMl) lately. Last time I talked about some of the things which confused me, this time I want to talk about one of my favourite parts of the language, variants and pattern matching.
+As you may already know if you read my last post, I have been enjoying writing Reason (also known as ReasonMl) lately. Last time I talked about some of the things which I found a bit confusing as a JavScript developer writing Reason for the first time, this time I want to talk about one of my favourite parts of the language, variants and pattern matching.
 
 ## What are variants?
-Variants are a type in Reason which you may have already encountered in other languages as enums. They are a way of saying that something __is__ a thing of a certain type. I don't think I explained that very well!. You can think of a boolean as a variant because it __is__ either true or false. In the same way a variant __is__ one thing or any number of other things, but it can't be anything else. Let's use an example to dig me out of this semantic hole:
+Variants are a type in Reason which you may have already encountered in other languages but under a different name, enums. They are a way of saying that something __is__ of a certain type - I don't think I explained that very well - you can think of a boolean as a variant because it __is__ either true or false, in the same way a variant __is__ one thing or any number of other things, but it can't be anything else. Let's use an example to dig me out of this semantic hole:
 
 ```reason
 type season = 
@@ -22,7 +22,7 @@ type season =
 There are only four seasons and in the same way our `season` variant type can only have the four cases `Winter`, `Spring`, `Summer` or `Autumn`. Notice that the variant cases themselves begin with a capital letter, this is because they are actually constructors and can be called with variables as you would with a function. This means that you can also pass variables around inside your variants like this:
 
 ```reason
-type temp = float;
+type temp = int;
 
 type weather = 
     | Snowing 
@@ -35,8 +35,10 @@ type season =
     | Spring(temp, weather) 
     | Summer(temp, weather) 
     | Autumn(temp, weather);
+
+let january = Winter(6, Snowing);
 ```
-Here, each of the `season` variants contains two variables, `temp` and `weather`. `temp` is just an alias for float, aliasing is a way of documenting code so that it is easier to convey  intent to anyone reading it in future, the compiler will just see it as a float though. `weather` is another variant; it's possible to pass variants around inside of other variants, they can also be self recursive:
+Here, each of the `season` variants contains two variables, `temp` and `weather`. `temp` is just an alias for int (aliasing is a way of documenting code so that it is easier to convey  intent to anyone reading it in future, the compiler will just see it as a float though), `weather` is another variant type, it's possible to pass variants around inside of other variants, they can also be self recursive:
 
 ```reason
 type things('a) = 
@@ -52,4 +54,68 @@ Js.log(["three", "element", "list]);
   output={`[ 'three', [ 'element', [ 'list', 0 ] ] ]`}
 />
 
+## What is pattern matching?
+Pattern matching is a way to match certain structures in the code and extract the values which we want from it. If you've ever destructured an object in JavaScript then you are already familiar with one of the techniques:
 
+```reason
+let newTuple = ("one", 2, 3.00);
+let (_, myInt, _) = newTuple;
+```
+If we only want the integer which is in the second position of `newTuple` then we can provide the pattern which Reason will match, the underscores indicate that we are not planning on doing anything with the values at these positions, the only value we care about is at position number two and we would like that value to be bound to the variable `myInt`.
+
+We can use the same technique to get the value from a variant:
+```reason
+type result = | Ok(string);
+
+let output = Ok("hi");
+
+let (Ok(valueFromOutput)) = output;
+Js.log(valueFromOutput);
+```
+<CliOutput output="hi" />
+
+The `result` variable only has one case `Ok` which holds the value from whatever process returned the result. We can get the value from the variant in the same way as we did above. It's a bit strange to set up a variant with only one case though, and in fact, `result` is a standard variant/enum which is found in several languages, it normally has two cases, one for `Ok` and the other for `Error`:
+
+```reason
+type result = | Ok(string) | Error;
+
+let output = Ok("hi");
+
+let (Ok(valueFromOutput)) = output;
+Js.log(valueFromOutput)
+```
+<CliOutput error output={`You forgot to handle a possible value here, for example:
+Error`} />
+
+The way we handle this is with a switch:
+```reason
+type result = | Ok(string) | Error;
+
+let output = Ok("hi");
+
+let valueFromOutput = switch(output) {
+  | Ok(value) => value
+  | Error => "This thing didn't work"
+}
+```
+If you are coming from JavaScript then you are probably already familiar with the switch, the value goes in the top and then we write a case for each possibility. The compiler will tell us if we haven't covered a case which is great for eliminating a tonne of bugs. 
+
+Another standard variant type is option. Reason does not have null, it handles the possibility of a value not being there with the option variant which has two cases, Some and None:
+```reason
+type option = | Some(string) | None;
+
+let valueFromOutput =
+  fun
+  | Some(value) => value
+  | None => "This thing didn't work"
+
+Js.log(valueFromOutput(Some("hi")))
+```
+I've used a slightly different syntax here but the result is the same. This time `valueFromOutput` is a function, the `fun` keyword is used to tell Reason that we want to pass the arguments to the function into the switch and then return the result. It's shorter than using a switch inside a function though not by a great deal, I think it looks cleaner though and I will use this syntax from here onwards.
+
+
+
+guards (when) and as operator
+remember #type
+## Polymorphic variants
+## How I've used them
