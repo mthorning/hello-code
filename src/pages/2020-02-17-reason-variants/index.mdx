@@ -55,7 +55,7 @@ Js.log(["three", "element", "list]);
 />
 
 ## What is pattern matching?
-Pattern matching is a way to match certain structures in the code and extract the values which we want from it. If you've ever destructured an object in JavaScript then you are already familiar with one of the techniques:
+Pattern matching is a way of matching certain structures in the code to extract the values which we want from it. If you've ever destructured an object in JavaScript then you are already familiar with one of the techniques:
 
 ```reason
 let newTuple = ("one", 2, 3.00);
@@ -74,7 +74,7 @@ Js.log(valueFromOutput);
 ```
 <CliOutput output="hi" />
 
-The `result` variable only has one case `Ok` which holds the value from whatever process returned the result. We can get the value from the variant in the same way as we did above. It's a bit strange to set up a variant with only one case though, and in fact, `result` is a standard variant/enum which is found in several languages, it normally has two cases, one for `Ok` and the other for `Error`:
+The `result` variant only has one case `Ok` which holds the value from whatever process returned the result. We can get the value from the variant in the same way as we did above. It's a bit strange to set up a variant with only one case though, and in fact, `result` is a standard variant/enum which is found in several languages, it normally has two cases, one for `Ok` and the other for `Error`:
 
 ```reason
 type result = | Ok(string) | Error;
@@ -87,7 +87,7 @@ Js.log(valueFromOutput)
 <CliOutput error output={`You forgot to handle a possible value here, for example:
 Error`} />
 
-The way we handle this is with a switch:
+This is where variants come into their own; the compiler will check that you have handled every possible case for any variants you declare. This removes a significant cognitive load and also makes refactoring code a lot less unlikely to lead to introducing bugs. It's not possible for us to handle multiple cases using destructuring like we have above, the way we handle this is with a switch:
 ```reason
 type result = | Ok(string) | Error;
 
@@ -98,9 +98,9 @@ let valueFromOutput = switch(output) {
   | Error => "This thing didn't work"
 }
 ```
-If you are coming from JavaScript then you are probably already familiar with the switch, the value goes in the top and then we write a case for each possibility. The compiler will tell us if we haven't covered a case which is great for eliminating a tonne of bugs. 
+If you are coming from JavaScript then you are probably already familiar with the switch, the value goes in the top and then we write a case for each possibility.
 
-Another standard variant type is option. Reason does not have null, it handles the possibility of a value not being there with the option variant which has two cases, Some and None:
+Another standard variant type is option. Reason does not have null (no more "cannot read property 'x' of null!), it handles the possibility of a value not being there with the option variant which has two cases, Some and None:
 ```reason
 type option = | Some(string) | None;
 
