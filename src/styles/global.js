@@ -246,7 +246,7 @@ export default css`
   h2 {
     margin-left: 0;
     margin-right: 0;
-    margin-top: 0;
+    margin-top: 55px;
     padding-bottom: 0;
     padding-left: 0;
     padding-right: 0;

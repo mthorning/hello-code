@@ -7,10 +7,10 @@ tags: ['reasonml', 'frontend']
 
 import CliOutput from 'mdx/CliOutput'
 
-As you may already know if you read my last post, I have been enjoying writing Reason (also known as ReasonMl) lately. Last time I talked about some of the things which I found a bit confusing as a JavScript developer writing Reason for the first time, this time I want to talk about one of my favourite parts of the language, variants and pattern matching.
+As you may already know if you read my last post, I have been enjoying writing Reason lately (also known as ReasonML). Last time I talked about some of the things which I found a bit confusing as a JavaScript developer writing Reason for the first time, this time I want to talk about one of my favourite parts of the language, variants with pattern matching.
 
 ## What are variants?
-Variants are a type in Reason which you may have already encountered in other languages but under a different name, enums. They are a way of saying that something __is__ of a certain type - I don't think I explained that very well - you can think of a boolean as a variant because it __is__ either true or false, in the same way a variant __is__ one thing or any number of other things, but it can't be anything else. Let's use an example to dig me out of this semantic hole:
+The easiest way I can think of describing variants is to liken them to booleans. A boolean can be one of two cases, true or false; it must be one or the other and can't be anything else. Variants are the same as booleans except you can have as many cases as you like and they can even be passed around with variables contained inside of them. Here's an example of a variant:
 
 ```reason
 type season = 
@@ -19,7 +19,7 @@ type season =
     | Summer 
     | Autumn;
 ```
-There are only four seasons and in the same way our `season` variant type can only have the four cases `Winter`, `Spring`, `Summer` or `Autumn`. Notice that the variant cases themselves begin with a capital letter, this is because they are actually constructors and can be called with variables as you would with a function. This means that you can also pass variables around inside your variants like this:
+There are only four seasons in the real world (our world anyway!) and in the same way our `season` variant can only have the four cases `Winter`, `Spring`, `Summer` or `Autumn`. Notice that the variant cases themselves begin with a capital letter, this is because they are actually constructors and can be called with variables as you would with a function. This is how we can pass variables around inside variants:
 
 ```reason
 type temp = int;
@@ -38,7 +38,7 @@ type season =
 
 let january = Winter(6, Snowing);
 ```
-Here, each of the `season` variants contains two variables, `temp` and `weather`. `temp` is just an alias for int (aliasing is a way of documenting code so that it is easier to convey  intent to anyone reading it in future, the compiler will just see it as a float though), `weather` is another variant type, it's possible to pass variants around inside of other variants, they can also be self recursive:
+Here, each of the `season` variants contains two variables, `temp` and `weather`. `temp` is just an alias for int (aliasing is a way of documenting code so that it is easier to convey  intent to anyone reading it in future, the compiler will just see it as an int though) and `weather` is another variant type; it's possible to pass variants around inside of other variants and they can also be self recursive:
 
 ```reason
 type things('a) = 
@@ -61,7 +61,7 @@ Pattern matching is a way of matching certain structures in the code to extract 
 let newTuple = ("one", 2, 3.00);
 let (_, myInt, _) = newTuple;
 ```
-If we only want the integer which is in the second position of `newTuple` then we can provide the pattern which Reason will match, the underscores indicate that we are not planning on doing anything with the values at these positions, the only value we care about is at position number two and we would like that value to be bound to the variable `myInt`.
+If we only want the integer which is in the second position of `newTuple` then we can provide the pattern which Reason will match. The underscores indicate that we are not planning on doing anything with the values at these positions, the only value we care about is at position number two and we would like that value to be bound to the variable `myInt`.
 
 We can use the same technique to get the value from a variant:
 ```reason
@@ -70,11 +70,10 @@ type result = | Ok(string);
 let output = Ok("hi");
 
 let (Ok(valueFromOutput)) = output;
-Js.log(valueFromOutput);
+Js.log(valueFromOutput); /* hi */
 ```
-<CliOutput output="hi" />
 
-The `result` variant only has one case `Ok` which holds the value from whatever process returned the result. We can get the value from the variant in the same way as we did above. It's a bit strange to set up a variant with only one case though, and in fact, `result` is a standard variant/enum which is found in several languages, it normally has two cases, one for `Ok` and the other for `Error`:
+The `result` variant only has one case `Ok` which holds the value from whatever process returned the result. We can get the value from the variant in the same way as we did above. It's a bit strange to declare a variant with only one case though, and in fact, `result` is a standard variant/enum which is found in several languages, it normally has two cases, one for `Ok` and the other for `Error`:
 
 ```reason
 type result = | Ok(string) | Error;
@@ -82,12 +81,14 @@ type result = | Ok(string) | Error;
 let output = Ok("hi");
 
 let (Ok(valueFromOutput)) = output;
-Js.log(valueFromOutput)
+Js.log(valueFromOutput);
 ```
 <CliOutput error output={`You forgot to handle a possible value here, for example:
 Error`} />
 
-This is where variants come into their own; the compiler will check that you have handled every possible case for any variants you declare. This removes a significant cognitive load and also makes refactoring code a lot less unlikely to lead to introducing bugs. It's not possible for us to handle multiple cases using destructuring like we have above, the way we handle this is with a switch:
+This is where variants come into their own; the compiler will check that you have handled every possible case for any variants you declare. This means that you no longer have to think about every possible path your code might have and also makes refactoring a lot less likely to lead to bugs. 
+
+Now that there is more than one case in our variant it is no longer possible for us to get the value by destructuring like we have above, instead we handle this with a switch:
 ```reason
 type result = | Ok(string) | Error;
 
@@ -96,11 +97,11 @@ let output = Ok("hi");
 let valueFromOutput = switch(output) {
   | Ok(value) => value
   | Error => "This thing didn't work"
-}
+};
 ```
-If you are coming from JavaScript then you are probably already familiar with the switch, the value goes in the top and then we write a case for each possibility.
+If you are coming from JavaScript then you are probably already familiar with the switch statement, the value goes in the top and then we write a case for each possibility.
 
-Another standard variant type is option. Reason does not have null (no more "cannot read property 'x' of null!), it handles the possibility of a value not being there with the option variant which has two cases, Some and None:
+Another standard variant type is `option`. Reason does not have null (no more "cannot read property 'x' of null errors!) instead, it handles the possibility of a value not being there with the option variant which has two cases, `Some` and `None`:
 ```reason
 type option = | Some(string) | None;
 
@@ -111,11 +112,79 @@ let valueFromOutput =
 
 Js.log(valueFromOutput(Some("hi")))
 ```
-I've used a slightly different syntax here but the result is the same. This time `valueFromOutput` is a function, the `fun` keyword is used to tell Reason that we want to pass the arguments to the function into the switch and then return the result. It's shorter than using a switch inside a function though not by a great deal, I think it looks cleaner though and I will use this syntax from here onwards.
+I've used a slightly different syntax here but the result is the same. This time `valueFromOutput` is a function, the `fun` keyword is used to tell Reason that we want to pass the arguments to the function directly into the switch statement. It's shorter than using a switch inside a function though not by a great deal, I do think it looks cleaner though and I will use this syntax from here onwards unless I forget.
 
+There are a few extra useful things to know about when using variants and/or pattern matching which I will come back to but first we need to quickly mention polymorphic variants...
 
-
-guards (when) and as operator
-remember #type
 ## Polymorphic variants
+
+
+## When, as and catch-alls
+Ok, now that we know about polymorphic variants we can come back to the extra goodies I mentioned before.
+
+Guards can be used by using the `when` keyword, they prevent matching unless an additional statement is true:
+```reason
+type match = | Nope | Yes(string);
+
+let doesMatch = 
+  fun
+  | Nope => false
+  | Yes(orDoesIt) when orDoesIt == "nope" => false
+  | Yes(_) => true;
+
+Js.log(doesMatch(Nope)); /* false */
+Js.log(doesMatch(Yes("nope"))); /* false */
+Js.log(doesMatch(Yes("do it"))); /* true */
+```
+Sidenote about the double equals `==`, if you are used to writing JavaScript then you probably use triple equals most of the time because triple equals does not allow coercion. There is no coercion in Reason and although it may at first seem that the behaviour is the same, there is a subtle difference; double equals in Reason compares the values whereas triple equals compares references:
+```reason
+let test = ["one", "two"];
+Js.log(test == ["one", "two"]); /* true */
+Js.log(test === ["one", "two"]); /* false */
+```
+
+Just worth being aware of if you are coming over from JavaScript!
+
+Moving on, the `as` operator can be used to bind values to a variable name:
+```reason
+let (_, (x, _) as fives) = (0, (5, 5));
+let (y, z) = fives;
+Js.log3(x, y, z); /* 5 5 5 */
+```
+
+There are a couple of methods for implementing catch-alls in switch statements (think default in JavaScript). The first is by using underscore to match anything:
+```reason
+type numbers = [ `One | `Two ];
+type words = [ `Hello | `World ];
+
+let matchAnything = 
+  fun
+  | `One => "number"
+  | `Hello => "word" 
+  | _ => "don't know";
+
+Js.log(matchAnything(`One)); /* number */
+Js.log(matchAnything(`Two)); /* don't know */
+Js.log(matchAnything(`Hello)); /* word */
+Js.log(matchAnything(`World)); /* don't know */
+```
+
+Or, you can match the remainder of a variant with a hash followed by the variant name:
+```reason
+let matchVariants = 
+  fun
+  | `One => "number"
+  | `Hello => "word" 
+  | #numbers => "number"
+  | #words => "word";
+
+Js.log(matchVariants(`One)); /* number */
+Js.log(matchVariants(`Two)); /* number */
+Js.log(matchVariants(`Hello)); /* word */
+Js.log(matchVariants(`World)); /* word */
+```
+
+
+
+remember #type
 ## How I've used them
