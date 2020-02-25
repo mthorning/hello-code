@@ -7,7 +7,7 @@ tags: ['reasonml', 'frontend']
 
 import CliOutput from 'mdx/CliOutput'
 
-As you may already know if you read my last post, I have been enjoying writing Reason lately (also known as ReasonML). Last time I talked about some of the things which I found a bit confusing as a JavaScript developer writing Reason for the first time, this time I want to talk about one of my favourite parts of the language, variants with pattern matching.
+As you may already know if you read my last post, I have been enjoying writing Reason lately. Last time I talked about some of the things which I found a bit confusing as a JavaScript developer writing Reason for the first time, this time I want to talk about one of my favourite parts of the language, variants with pattern matching.
 
 ## What are variants?
 The easiest way I can think of describing variants is to liken them to booleans. A boolean can be one of two cases, true or false; it must be one or the other and can't be anything else. Variants are the same as booleans except you can have as many cases as you like and they can even be passed around with variables contained inside of them. Here's an example of a variant:
@@ -73,7 +73,7 @@ let (Ok(valueFromOutput)) = output;
 Js.log(valueFromOutput); /* hi */
 ```
 
-The `result` variant only has one case `Ok` which holds the value from whatever process returned the result. We can get the value from the variant in the same way as we did above. It's a bit strange to declare a variant with only one case though, and in fact, `result` is a standard variant/enum which is found in several languages, it normally has two cases, one for `Ok` and the other for `Error`:
+The `result` variant only has one case `Ok` which holds the value from whatever process returned the result. We can get the value from the variant in the same way as we did above. It's a bit strange to declare a variant with only one constructor though, and in fact, `result` is a standard variant/enum which is found in several languages, it normally has two cases, one for `Ok` and the other for `Error`:
 
 ```reason
 type result = | Ok(string) | Error;
@@ -88,7 +88,7 @@ Error`} />
 
 This is where variants come into their own; the compiler will check that you have handled every possible case for any variants you declare. This means that you no longer have to think about every possible path your code might have and also makes refactoring a lot less likely to lead to bugs. 
 
-Now that there is more than one case in our variant it is no longer possible for us to get the value by destructuring like we have above, instead we handle this with a switch:
+Now that there is more than one constructor in our variant it is no longer possible for us to get the value by destructuring like we have above, instead we handle this with a switch:
 ```reason
 type result = | Ok(string) | Error;
 
@@ -99,7 +99,7 @@ let valueFromOutput = switch(output) {
   | Error => "This thing didn't work"
 };
 ```
-If you are coming from JavaScript then you are probably already familiar with the switch statement, the value goes in the top and then we write a case for each possibility.
+If you are coming from JavaScript then you are probably already familiar with the switch statement, the variable goes in the top and then we write a handler for each possible value.
 
 Another standard variant type is `option`. Reason does not have null (no more "cannot read property 'x' of null errors!) instead, it handles the possibility of a value not being there with the option variant which has two cases, `Some` and `None`:
 ```reason
@@ -118,6 +118,29 @@ There are a few extra useful things to know about when using variants and/or pat
 
 ## Polymorphic variants
 
+I first saw polymorphic variants when I was using the [Bucklescript bindings for Emotion](https://github.com/reasonml-labs/bs-css) and I had no clue what they were! I haven't had any experience of actually using them so I won't attempt to go into any detail, I just hope that you will find a basic awareness of them helpful in case you come across them like I did.
+
+Non-polymorphic (or monomorphic) variants are tied to a type, as we have already seen. Polymorphic variables are not and can be used with other polymorphic variants in ways which would not be possible with normal variants. 
+
+Polymorphic variant types are declared in much the same way as their monomorphic counterparts except that the cases are surrounded with square brackets and each constructor starts with a backtick:
+```reason
+type seasons = [ `Winter | `Spring | `Summer | `Autumn ];
+```
+
+Polymorphic variants can also be used without first declaring them:
+```reason
+let weather = `Raining;
+```
+They are globally scoped and you can create more than one with the same name which I'm guessing could lead to problems if you're not careful! But because they are polymorphic it is also possible to mix different types in the same list, switch, etc.
+```reason
+type seasons = [ `Winter | `Spring | `Summer | `Autumn ];
+type weather = [ `Snowing | `Raining | `Windy | `Sunny ];
+
+let checkWeather = 
+  fun
+  | `Winter => "It's winter so it's probably snowing"
+  | `Snowing => "It's snowing so it's probably winter";
+```
 
 ## When, as and catch-alls
 Ok, now that we know about polymorphic variants we can come back to the extra goodies I mentioned before.
@@ -169,7 +192,7 @@ Js.log(matchAnything(`Hello)); /* word */
 Js.log(matchAnything(`World)); /* don't know */
 ```
 
-Or, you can match the remainder of a variant with a hash followed by the variant name:
+Or you can match whole variant types with a hash followed by the variant name:
 ```reason
 let matchVariants = 
   fun
@@ -183,8 +206,3 @@ Js.log(matchVariants(`Two)); /* number */
 Js.log(matchVariants(`Hello)); /* word */
 Js.log(matchVariants(`World)); /* word */
 ```
-
-
-
-remember #type
-## How I've used them
